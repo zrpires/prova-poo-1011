@@ -3,6 +3,7 @@ package com.horadesub.app.Controller;
 import com.horadesub.app.model.AlunoModel;
 import com.horadesub.app.model.CursoModel;
 import com.horadesub.app.service.AlunoService;
+import com.horadesub.app.service.CursoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +17,13 @@ public class AlunoController {
     @Autowired
     private AlunoService alunoService;
 
+    @Autowired
+    private CursoService cursoService;
 
-    @PostMapping
-    public ResponseEntity<AlunoModel> save(@RequestBody AlunoModel alunoModel){
-        AlunoModel response = this.alunoService.save(alunoModel);
-        return ResponseEntity.ok(response);
+    @PostMapping("/{id}")
+    public ResponseEntity<AlunoModel> save(@RequestBody AlunoModel alunoModel, @PathVariable("id") Long id){
+        this.cursoService.add(id, alunoModel);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping

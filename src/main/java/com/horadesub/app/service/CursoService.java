@@ -1,6 +1,7 @@
 package com.horadesub.app.service;
 
 
+import com.horadesub.app.model.AlunoModel;
 import com.horadesub.app.model.CursoModel;
 import com.horadesub.app.repository.CursoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,12 @@ public class CursoService {
 
     public CursoModel save(CursoModel curso){
         return this.cursoRepository.save(curso);
+    }
+
+    public void add(Long id, AlunoModel a){
+        CursoModel c = this.cursoRepository.findById(id).get();
+        c.addAluno(a);
+        this.cursoRepository.save(c);
     }
 
     public List<CursoModel> findAll(){
